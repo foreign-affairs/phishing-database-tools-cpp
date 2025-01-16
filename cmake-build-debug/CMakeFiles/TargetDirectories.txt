@@ -1,0 +1,3 @@
+/home/spirillen/Projects/github/foreign-affairs/PhishingDatabaseTools/cmake-build-debug/CMakeFiles/dnsverificationcpp.dir
+/home/spirillen/Projects/github/foreign-affairs/PhishingDatabaseTools/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/spirillen/Projects/github/foreign-affairs/PhishingDatabaseTools/cmake-build-debug/CMakeFiles/rebuild_cache.dir
