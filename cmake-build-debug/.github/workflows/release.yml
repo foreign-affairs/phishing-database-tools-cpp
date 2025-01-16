@@ -1,4 +1,4 @@
-name: Release Workflow
+name: CI/CD Pipeline
 
 on:
   push:
@@ -6,15 +6,14 @@ on:
       - master
   pull_request:
     branches:
-      - '**'
+      - master
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    env:
-      KB_YOUTRACK_USER: ${{ secrets.YOUTRACK_USER }}
-      KB_YOUTRACK_API_TOKEN: ${{ secrets.YOUTRACK_API_TOKEN }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
 
     steps:
       - name: Checkout repository
@@ -26,69 +25,37 @@ jobs:
           python-version: '3.x'
 
       - name: Install dependencies
-        run: pip install --no-cache-dir mypdns
-
-      - name: Compile project
         run: |
-          mkdir build
-          cd build
-          cmake ..
-          make
+          python -m pip install --upgrade pip
+          pip install mypdns
 
-      - name: Update Version
+      - name: Compile code
         run: |
-          VERSION=$(grep -Eo 'VERSION "[0-9]+\.[0-9]+\.[0-9]+"' version.h | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+')
-          NEW_VERSION=$(echo $VERSION | awk -F. '{$NF += 1; OFS="."; print $0}')
-          sed -i "s/$VERSION/$NEW_VERSION/" version.h
-
-      - name: Update CHANGELOG
-        run: |
-          COMMIT_MSG=$(git log -1 --pretty=%B)
-          ISSUE_ID=$(echo $COMMIT_MSG | grep -oE 'TBX-[0-9]+')
-          if [ -z "$ISSUE_ID" ]; then
-            echo "## Release $NEW_VERSION" >> CHANGELOG.md
-          else
-            ISSUE_SUMMARY=$(curl -s -u $KB_YOUTRACK_USER:$KB_YOUTRACK_API_TOKEN "https://kb.mypdns.org/youtrack/api/issues/$ISSUE_ID?fields=summary")
-            echo "## Release $NEW_VERSION" >> CHANGELOG.md
-            echo "- $ISSUE_SUMMARY" >> CHANGELOG.md
+          if [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
+            sudo apt-get update
+            sudo apt-get install -y build-essential cmake
+            mkdir -p build
+            cd build
+            cmake ..
+            make
+          elif [ "${{ matrix.os }}" == "windows-latest" ]; then
+            # Add Windows build steps here
+            echo "Windows build steps needed"
+          elif [ "${{ matrix.os }}" == "macos-latest" ]; then
+            # Add macOS build steps here
+            echo "macOS build steps needed"
           fi
 
-      - name: Commit changes
+      - name: Update version and changelog
+        run: python update_version_changelog.py
+
+      - name: Create and push a new release
+        if: github.ref == 'refs/heads/master'
         run: |
-          git config --global user.name "spirillen"
-          git config --global user.email "spirillen@example.com"
+          git config --global user.name "${{ secrets.GH_USER }}"
+          git config --global user.email "${{ secrets.GH_EMAIL }}"
           git add version.h CHANGELOG.md
-          git commit -m "Release $NEW_VERSION"
-          git push origin HEAD:master
-
-      - name: Create Release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v$NEW_VERSION
-          release_name: "Release $NEW_VERSION"
-          body: |
-            ## Release $NEW_VERSION
-            - [Knowledge Base](https://kb.mypdns.org/articles)
-            - [Issue Board](https://kb.mypdns.org/issues?u=1&q=%23Unresolved%20in%20%23TBX)
-            
-            ### Installation Guide
-            ```bash
-            # set PATH so it includes user's private bin if it exists
-            if [ -d "$HOME/bin" ] ; then
-                PATH="$HOME/bin:$PATH"
-            fi
-            
-            # set PATH so it includes user's private bin if it exists
-            if [ -d "$HOME/.local/bin" ] ; then
-                PATH="$HOME/.local/bin:$PATH"
-            fi
-            ```
-            
-            Please consider sponsoring My Privacy DNS via [donate](https://www.mypdns.org/donate)
-
-      - name: Close YouTrack Issue
-        if: ${{ steps.commit.outputs.ISSUE_ID }}
-        run: |
-          curl -X POST -u $KB_YOUTRACK_USER:$KB_YOUTRACK_API_TOKEN "https://kb.mypdns.org/youtrack/api/issues/${{ steps.commit.outputs.ISSUE_ID }}/execute?command=Fixed in $NEW_VERSION"
+          git commit -m "Release ${{ steps.update_version_changelog.outputs.version }}"
+          git tag -a "v${{ steps.update_version_changelog.outputs.version }}" -m "Release ${{ steps.update_version_changelog.outputs.version }}"
+          git push origin --tags
+          git push origin master

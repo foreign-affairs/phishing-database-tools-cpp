@@ -215,14 +215,11 @@ CMAKE_TAPI:FILEPATH=CMAKE_TAPI-NOTFOUND
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
-//Value Computed by CMake
-PhishingDatabaseTools_BINARY_DIR:STATIC=/home/spirillen/Projects/github/foreign-affairs/PhishingDatabaseTools/cmake-build-debug
+//No help, variable specified on the command line.
+Python3_EXECUTABLE:UNINITIALIZED=/home/spirillen/miniconda3/envs/PhishingDatabaseTools/bin/python
 
-//Value Computed by CMake
-PhishingDatabaseTools_IS_TOP_LEVEL:STATIC=ON
-
-//Value Computed by CMake
-PhishingDatabaseTools_SOURCE_DIR:STATIC=/home/spirillen/Projects/github/foreign-affairs/PhishingDatabaseTools
+//No help, variable specified on the command line.
+Python_EXECUTABLE:UNINITIALIZED=/home/spirillen/miniconda3/envs/PhishingDatabaseTools/bin/python
 
 //Value Computed by CMake
 dnsverificationcpp_BINARY_DIR:STATIC=/home/spirillen/Projects/github/foreign-affairs/PhishingDatabaseTools/cmake-build-debug
@@ -232,15 +229,6 @@ dnsverificationcpp_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
 dnsverificationcpp_SOURCE_DIR:STATIC=/home/spirillen/Projects/github/foreign-affairs/PhishingDatabaseTools
-
-//Value Computed by CMake
-phishingDatabaseTools_BINARY_DIR:STATIC=/home/spirillen/Projects/github/foreign-affairs/PhishingDatabaseTools/cmake-build-debug
-
-//Value Computed by CMake
-phishingDatabaseTools_IS_TOP_LEVEL:STATIC=ON
-
-//Value Computed by CMake
-phishingDatabaseTools_SOURCE_DIR:STATIC=/home/spirillen/Projects/github/foreign-affairs/PhishingDatabaseTools
 
 
 ########################

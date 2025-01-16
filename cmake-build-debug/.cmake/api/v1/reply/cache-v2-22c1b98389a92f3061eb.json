@@ -1142,40 +1142,28 @@
 			"value" : "FALSE"
 		},
 		{
-			"name" : "PhishingDatabaseTools_BINARY_DIR",
+			"name" : "Python3_EXECUTABLE",
 			"properties" : 
 			[
 				{
 					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
+					"value" : "No help, variable specified on the command line."
 				}
 			],
-			"type" : "STATIC",
-			"value" : "/home/spirillen/Projects/github/foreign-affairs/PhishingDatabaseTools/cmake-build-debug"
+			"type" : "UNINITIALIZED",
+			"value" : "/home/spirillen/miniconda3/envs/PhishingDatabaseTools/bin/python"
 		},
 		{
-			"name" : "PhishingDatabaseTools_IS_TOP_LEVEL",
+			"name" : "Python_EXECUTABLE",
 			"properties" : 
 			[
 				{
 					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
+					"value" : "No help, variable specified on the command line."
 				}
 			],
-			"type" : "STATIC",
-			"value" : "ON"
-		},
-		{
-			"name" : "PhishingDatabaseTools_SOURCE_DIR",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "/home/spirillen/Projects/github/foreign-affairs/PhishingDatabaseTools"
+			"type" : "UNINITIALIZED",
+			"value" : "/home/spirillen/miniconda3/envs/PhishingDatabaseTools/bin/python"
 		},
 		{
 			"name" : "_CMAKE_LINKER_PUSHPOP_STATE_SUPPORTED",
@@ -1215,42 +1203,6 @@
 		},
 		{
 			"name" : "dnsverificationcpp_SOURCE_DIR",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "/home/spirillen/Projects/github/foreign-affairs/PhishingDatabaseTools"
-		},
-		{
-			"name" : "phishingDatabaseTools_BINARY_DIR",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "/home/spirillen/Projects/github/foreign-affairs/PhishingDatabaseTools/cmake-build-debug"
-		},
-		{
-			"name" : "phishingDatabaseTools_IS_TOP_LEVEL",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "ON"
-		},
-		{
-			"name" : "phishingDatabaseTools_SOURCE_DIR",
 			"properties" : 
 			[
 				{

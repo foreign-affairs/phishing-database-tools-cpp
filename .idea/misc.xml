@@ -36,9 +36,4 @@
       </profile-state>
     </entry>
   </component>
-  <component name="TaskProjectConfiguration">
-    <server type="YouTrack" url="https://kb.mypdns.org" />
-    <server type="YouTrack" url="https://mypdns.youtrack.cloud" />
-    <server type="GitHub" url="https://github.com" />
-  </component>
 </project>

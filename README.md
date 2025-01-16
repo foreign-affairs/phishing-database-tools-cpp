@@ -1,6 +1,6 @@
 # Phishing Database Tools: TXT record validator
 
-## English (United Kingdom)
+## English
 This tool verifies phishing database TXT files. Usage instructions are included in the `scripts` directory.
 
 ## German
@@ -20,13 +20,12 @@ Questo strumento verifica i file di TXT del database di phishing. Le istruzioni 
 
 ## Usage
 
+```shell
 PhishingDatabaseTools [options] domain test_value
+```
 
 ## Options
 
 -h, --help          Show this help message
 -v, --version       Show the program version
--p, --prefix PREFIX Specify a custom prefix for the domain (default: _phishingdb.)
-
- 
-
+-p, --prefix PREFIX Specify a custom prefix for the domain (default: `_phishingdb.`)
