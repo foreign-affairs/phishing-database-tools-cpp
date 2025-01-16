@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <dns_sd.h>
 #include <netinet/in.h>
 #include <arpa/nameser.h>
 #include <resolv.h>
