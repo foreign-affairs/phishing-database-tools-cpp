@@ -1,0 +1,94 @@
+name: Release Workflow
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      KB_YOUTRACK_USER: ${{ secrets.YOUTRACK_USER }}
+      KB_YOUTRACK_API_TOKEN: ${{ secrets.YOUTRACK_API_TOKEN }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install --no-cache-dir mypdns
+
+      - name: Compile project
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          make
+
+      - name: Update Version
+        run: |
+          VERSION=$(grep -Eo 'VERSION "[0-9]+\.[0-9]+\.[0-9]+"' version.h | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+')
+          NEW_VERSION=$(echo $VERSION | awk -F. '{$NF += 1; OFS="."; print $0}')
+          sed -i "s/$VERSION/$NEW_VERSION/" version.h
+
+      - name: Update CHANGELOG
+        run: |
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          ISSUE_ID=$(echo $COMMIT_MSG | grep -oE 'TBX-[0-9]+')
+          if [ -z "$ISSUE_ID" ]; then
+            echo "## Release $NEW_VERSION" >> CHANGELOG.md
+          else
+            ISSUE_SUMMARY=$(curl -s -u $KB_YOUTRACK_USER:$KB_YOUTRACK_API_TOKEN "https://kb.mypdns.org/youtrack/api/issues/$ISSUE_ID?fields=summary")
+            echo "## Release $NEW_VERSION" >> CHANGELOG.md
+            echo "- $ISSUE_SUMMARY" >> CHANGELOG.md
+          fi
+
+      - name: Commit changes
+        run: |
+          git config --global user.name "spirillen"
+          git config --global user.email "spirillen@example.com"
+          git add version.h CHANGELOG.md
+          git commit -m "Release $NEW_VERSION"
+          git push origin HEAD:master
+
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v$NEW_VERSION
+          release_name: "Release $NEW_VERSION"
+          body: |
+            ## Release $NEW_VERSION
+            - [Knowledge Base](https://kb.mypdns.org/articles)
+            - [Issue Board](https://kb.mypdns.org/issues?u=1&q=%23Unresolved%20in%20%23TBX)
+            
+            ### Installation Guide
+            ```bash
+            # set PATH so it includes user's private bin if it exists
+            if [ -d "$HOME/bin" ] ; then
+                PATH="$HOME/bin:$PATH"
+            fi
+            
+            # set PATH so it includes user's private bin if it exists
+            if [ -d "$HOME/.local/bin" ] ; then
+                PATH="$HOME/.local/bin:$PATH"
+            fi
+            ```
+            
+            Please consider sponsoring My Privacy DNS via [donate](https://www.mypdns.org/donate)
+
+      - name: Close YouTrack Issue
+        if: ${{ steps.commit.outputs.ISSUE_ID }}
+        run: |
+          curl -X POST -u $KB_YOUTRACK_USER:$KB_YOUTRACK_API_TOKEN "https://kb.mypdns.org/youtrack/api/issues/${{ steps.commit.outputs.ISSUE_ID }}/execute?command=Fixed in $NEW_VERSION"

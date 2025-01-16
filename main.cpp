@@ -25,8 +25,8 @@ void printVersion() {
 void setColor(const std::string& color) {
     if (color == "green") {
         std::cout << "\033[1;32m"; // Green
-    } else if (color == "orange") {
-        std::cout << "\033[1;33m"; // Orange
+    } else if (color == "red") {
+        std::cout << "\033[1;31m"; // Orange
     }
 }
 
@@ -66,7 +66,7 @@ bool queryDnsTxtRecord(const std::string& domain, const std::string& testValue, 
         }
     }
 
-    setColor("orange");
+    setColor("red");
     std::cout << "The test value does not match the DNS TXT record.\n";
     resetColor();
     return false;
@@ -103,6 +103,6 @@ auto main(int argc, char* argv[]) -> int
     // Perform DNS TXT query and compare the value
     queryDnsTxtRecord(domain, testValue, prefix);
 
-    std::cout << "Thanks for using my tools. Please consider sponsoring me at https://www.mypdns.org/donate\n";
+    std::cout << "\nThanks for using my tools.\nPlease consider a \033[1;31msponsor ship\033[0m at https://www.mypdns.org/donate\n";
     return 0;
 }
