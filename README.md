@@ -26,6 +26,8 @@ PhishingDatabaseTools [options] domain test_value
 
 ## Options
 
+```
 -h, --help          Show this help message
 -v, --version       Show the program version
 -p, --prefix PREFIX Specify a custom prefix for the domain (default: `_phishingdb.`)
+```
