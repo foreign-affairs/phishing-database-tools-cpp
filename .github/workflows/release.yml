@@ -49,7 +49,7 @@ jobs:
       - name: Extract version
         id: extract_version
         run: |
-          VERSION=$(grep '#define VERSION' version.h | cut -d '\"' -f 2)-${{ github.run_id }}
+          VERSION=$(grep '#define VERSION' version.h | cut -d '"' -f 2)-${{ github.run_id }}
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Create and push a new release
@@ -69,7 +69,7 @@ jobs:
         if: ${{ success() && github.ref == 'refs/heads/master' }}
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: "v$VERSION"
           release_name: "Release $VERSION"
