@@ -33,15 +33,10 @@ jobs:
 
       - name: Compile code
         run: |
-          mkdir -p build
+          mkdir -p build _c_make_files/
           cd build
           cmake -G Ninja ..
           ninja
-          # Copy camelCase to snake_case filenames
-          for file in $(find . -type f -name '*[A-Z]*'); do
-            newfile=$(echo $file | sed 's/\([A-Z]\)/_\1/g' | tr '[:upper:]' '[:lower:]')
-            cp $file $newfile
-          done
 
       - name: Run tests
         run: |
