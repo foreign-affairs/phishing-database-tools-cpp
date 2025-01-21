@@ -1,3 +1,7 @@
-/home/spirillen/Projects/github/foreign-affairs/PhishingDatabaseTools/cmake-build-debug/CMakeFiles/dnsverificationcpp.dir
+/home/spirillen/Projects/github/foreign-affairs/PhishingDatabaseTools/cmake-build-debug/CMakeFiles/ptcheck.dir
 /home/spirillen/Projects/github/foreign-affairs/PhishingDatabaseTools/cmake-build-debug/CMakeFiles/edit_cache.dir
 /home/spirillen/Projects/github/foreign-affairs/PhishingDatabaseTools/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/spirillen/Projects/github/foreign-affairs/PhishingDatabaseTools/cmake-build-debug/CMakeFiles/list_install_components.dir
+/home/spirillen/Projects/github/foreign-affairs/PhishingDatabaseTools/cmake-build-debug/CMakeFiles/install.dir
+/home/spirillen/Projects/github/foreign-affairs/PhishingDatabaseTools/cmake-build-debug/CMakeFiles/install/local.dir
+/home/spirillen/Projects/github/foreign-affairs/PhishingDatabaseTools/cmake-build-debug/CMakeFiles/install/strip.dir

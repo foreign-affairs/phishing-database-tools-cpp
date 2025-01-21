@@ -148,7 +148,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=dnsverificationcpp
+CMAKE_PROJECT_NAME:STATIC=ptcheck
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=/usr/bin/ranlib
@@ -229,6 +229,15 @@ dnsverificationcpp_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
 dnsverificationcpp_SOURCE_DIR:STATIC=/home/spirillen/Projects/github/foreign-affairs/PhishingDatabaseTools
+
+//Value Computed by CMake
+ptcheck_BINARY_DIR:STATIC=/home/spirillen/Projects/github/foreign-affairs/PhishingDatabaseTools/cmake-build-debug
+
+//Value Computed by CMake
+ptcheck_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+ptcheck_SOURCE_DIR:STATIC=/home/spirillen/Projects/github/foreign-affairs/PhishingDatabaseTools
 
 
 ########################
