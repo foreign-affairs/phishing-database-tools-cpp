@@ -51,8 +51,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
-          git config --global user.name "${{ secrets.GH_USER }}"
-          git config --global user.email "${{ secrets.GH_EMAIL }}"
+          git config --global user.name spirillen # "${{ secrets.GH_USER }}"
+          git config --global user.email 44526987+spirillen@users.noreply.github.com # "${{ secrets.GH_EMAIL }}"
           git add version.h CHANGELOG.md
           git commit -m "Release ${{ steps.update_version_changelog.outputs.version }}"
           git tag -a "v${{ steps.update_version_changelog.outputs.version }}" -m "Release ${{ steps.update_version_changelog.outputs.version }}"
