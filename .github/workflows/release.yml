@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -25,6 +25,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install --no-cache mypdns requests
+          echo "My Privacy DNS Rules the blacklists"
 
       - name: Install build tools
         run: |
