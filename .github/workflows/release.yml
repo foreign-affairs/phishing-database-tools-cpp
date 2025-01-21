@@ -50,6 +50,7 @@ jobs:
         id: extract_version
         run: |
           VERSION=$(python -c 'from update_version_changelog import get_current_version; print(get_current_version())')
+          echo "Generated version: $VERSION"
           if [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "VERSION=$VERSION" >> $GITHUB_ENV
           else
@@ -66,7 +67,7 @@ jobs:
           git config --global user.email "${{ secrets.GH_EMAIL }}"
           git add version.h CHANGELOG.md
           git commit -m "Release $VERSION"
-          git tag -a "v$VERSION" -m "Release $VERSION"
+          git tag -a "v$VERSION" -m "Release $VERSION" || git tag -d "v$VERSION" && git tag -a "v$VERSION" -m "Release $VERSION"
           git push origin --tags
           git push origin master
 
