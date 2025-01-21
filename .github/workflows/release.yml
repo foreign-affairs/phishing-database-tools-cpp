@@ -49,8 +49,8 @@ jobs:
       - name: Extract version
         id: extract_version
         run: |
-          VERSION=$(python -c 'from update_version_changelog import get_current_version; print(get_current_version())') #-${{ github.run_number }}
-          if [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+-[0-9]+$ ]]; then
+          VERSION=$(python -c 'from update_version_changelog import get_current_version; print(get_current_version())')
+          if [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9]+)?$ ]]; then
             echo "VERSION=$VERSION" >> $GITHUB_ENV
           else
             echo "Invalid version format: $VERSION"
