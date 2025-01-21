@@ -48,6 +48,8 @@ jobs:
 
       - name: Create and push a new release
         if: ${{ success() && github.ref == 'refs/heads/master' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
           git config --global user.name "${{ secrets.GH_USER }}"
           git config --global user.email "${{ secrets.GH_EMAIL }}"
