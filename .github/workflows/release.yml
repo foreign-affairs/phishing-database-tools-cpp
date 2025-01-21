@@ -46,15 +46,32 @@ jobs:
       - name: Update version and changelog
         run: python update_version_changelog.py
 
+      - name: Extract version
+        id: extract_version
+        run: |
+          echo "VERSION=$(grep '#define VERSION' version.h | cut -d '\"' -f 2)" >> $GITHUB_ENV
+
       - name: Create and push a new release
         if: ${{ success() && github.ref == 'refs/heads/master' }}
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
-          git config --global user.name spirillen # "${{ secrets.GH_USER }}"
-          git config --global user.email 44526987+spirillen@users.noreply.github.com # "${{ secrets.GH_EMAIL }}"
+          git config --global user.name "${{ secrets.GH_USER }}"
+          git config --global user.email "${{ secrets.GH_EMAIL }}"
           git add version.h CHANGELOG.md
-          git commit -m "Release ${{ steps.update_version_changelog.outputs.version }}"
-          git tag -a "v${{ steps.update_version_changelog.outputs.version }}" -m "Release ${{ steps.update_version_changelog.outputs.version }}"
+          git commit -m "Release ${{ env.VERSION }}"
+          git tag -a "v${{ env.VERSION }}" -m "Release ${{ env.VERSION }}"
           git push origin --tags
           git push origin master
+
+      - name: Create GitHub Release
+        if: ${{ success() && github.ref == 'refs/heads/master' }}
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+        with:
+          tag_name: "v${{ env.VERSION }}"
+          release_name: "Release ${{ env.VERSION }}"
+          body: "Release of version ${{ env.VERSION }}"
+          draft: false
+          prerelease: false
