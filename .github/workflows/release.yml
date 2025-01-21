@@ -50,7 +50,12 @@ jobs:
         id: extract_version
         run: |
           VERSION=$(grep '#define VERSION' version.h | cut -d '"' -f 2)-${{ github.run_id }}
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          if [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+-[0-9]+$ ]]; then
+            echo "VERSION=$VERSION" >> $GITHUB_ENV
+          else
+            echo "Invalid version format: $VERSION"
+            exit 1
+          fi
 
       - name: Create and push a new release
         if: ${{ success() && github.ref == 'refs/heads/master' }}
