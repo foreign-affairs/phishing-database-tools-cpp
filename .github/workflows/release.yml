@@ -11,9 +11,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
 
     steps:
       - name: Checkout repository
@@ -31,25 +28,17 @@ jobs:
 
       - name: Compile code
         run: |
-          if [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
-            sudo apt-get update
-            sudo apt-get install -y build-essential cmake
-            mkdir -p build
-            cd build
-            cmake ..
-            make
-            # Copy camelCase to snake_case filenames
-            for file in $(find . -type f -name '*[A-Z]*'); do
-              newfile=$(echo $file | sed 's/\([A-Z]\)/_\1/g' | tr '[:upper:]' '[:lower:]')
-              cp $file $newfile
-            done
-          elif [ "${{ matrix.os }}" == "windows-latest" ]; then
-            # Add Windows build steps here
-            echo "Windows build steps needed"
-          elif [ "${{ matrix.os }}" == "macos-latest" ]; then
-            # Add macOS build steps here
-            echo "macOS build steps needed"
-          fi
+          sudo apt-get update
+          sudo apt-get install -y build-essential cmake
+          mkdir -p build
+          cd build
+          cmake ..
+          make
+          # Copy camelCase to snake_case filenames
+          for file in $(find . -type f -name '*[A-Z]*'); do
+            newfile=$(echo $file | sed 's/\([A-Z]\)/_\1/g' | tr '[:upper:]' '[:lower:]')
+            cp $file $newfile
+          done
 
       - name: Update version and changelog
         run: python update_version_changelog.py
