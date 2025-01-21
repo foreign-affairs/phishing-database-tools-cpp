@@ -26,19 +26,26 @@ jobs:
           python -m pip install --upgrade pip
           pip install --no-cache mypdns
 
-      - name: Compile code
+      - name: Install build tools
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential cmake
+          sudo apt-get install -y build-essential cmake ninja-build
+
+      - name: Compile code
+        run: |
           mkdir -p build
           cd build
-          cmake ..
-          make
+          cmake -G Ninja ..
+          ninja
           # Copy camelCase to snake_case filenames
           for file in $(find . -type f -name '*[A-Z]*'); do
             newfile=$(echo $file | sed 's/\([A-Z]\)/_\1/g' | tr '[:upper:]' '[:lower:]')
             cp $file $newfile
           done
+
+      - name: Run tests
+        run: |
+          $program -p _toolboxtest. mypdns.cloud 0892437f0b275870223e0fce4bded7d0978ad5b240e61515520d40081ee2ada3b621bbc6512e4cf3c73c500e45ab23aa2b37b409825a5fb7c49b50dc977b5bde
 
       - name: Update version and changelog
         run: python update_version_changelog.py
