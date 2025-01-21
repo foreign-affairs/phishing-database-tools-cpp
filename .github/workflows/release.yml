@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -40,7 +40,7 @@ jobs:
 
       - name: Run tests
         run: |
-          $program -p _toolboxtest. mypdns.cloud 0892437f0b275870223e0fce4bded7d0978ad5b240e61515520d40081ee2ada3b621bbc6512e4cf3c73c500e45ab23aa2b37b409825a5fb7c49b50dc977b5bde
+          ./build/ptcheck -p _toolboxtest. mypdns.cloud 0892437f0b275870223e0fce4bded7d0978ad5b240e61515520d40081ee2ada3b621bbc6512e4cf3c73c500e45ab23aa2b37b409825a5fb7c49b50dc977b5bde
 
       - name: Update version and changelog
         run: python update_version_changelog.py
