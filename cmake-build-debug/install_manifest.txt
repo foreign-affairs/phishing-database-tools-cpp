@@ -1,0 +1,1 @@
+/home/spirillen/.local/bin/ptcheck
