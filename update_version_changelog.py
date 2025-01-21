@@ -1,6 +1,7 @@
 import re
 import os
 import requests
+import subprocess
 
 # Fetch the current version from version.h
 def get_current_version():
@@ -14,6 +15,8 @@ def get_current_version():
 # Update the version in version.h
 def update_version(current_version):
     new_version = increment_version(current_version)
+    while release_tag_exists(new_version):
+        new_version = increment_version(new_version)
     with open("version.h", "r") as file:
         content = file.read()
     new_content = re.sub(r'#define VERSION "\d+\.\d+\.\d+"', f'#define VERSION "{new_version}"', content)
@@ -21,11 +24,17 @@ def update_version(current_version):
         file.write(new_content)
     return new_version
 
+
 # Increment the version number
 def increment_version(version):
     major, minor, patch = map(int, version.split('.'))
     patch += 1
     return f"{major}.{minor}.{patch}"
+
+# Check if the release tag already exists
+def release_tag_exists(version):
+    result = subprocess.run(['git', 'tag', '-l', f'v{version}'], capture_output=True, text=True)
+    return f'v{version}' in result.stdout
 
 # Fetch issue summaries from YouTrack
 def get_issue_summaries(commit_messages):
