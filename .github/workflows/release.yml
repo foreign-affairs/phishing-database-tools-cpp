@@ -54,7 +54,7 @@ jobs:
       - name: Create and push a new release
         if: ${{ success() && github.ref == 'refs/heads/master' }}
         env:
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config --global user.name "${{ secrets.GH_USER }}"
           git config --global user.email "${{ secrets.GH_EMAIL }}"
@@ -66,9 +66,9 @@ jobs:
 
       - name: Create GitHub Release
         if: ${{ success() && github.ref == 'refs/heads/master' }}
-        uses: actions/create-release@v2
+        uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: "v${{ env.VERSION }}"
           release_name: "Release ${{ env.VERSION }}"
