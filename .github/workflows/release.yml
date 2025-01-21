@@ -49,7 +49,7 @@ jobs:
       - name: Extract version
         id: extract_version
         run: |
-          VERSION=$(grep '#define VERSION' version.h | cut -d '\"' -f 2)-${{ github.run_id }}
+          VERSION=$(grep '#define VERSION' version.h | cut -d '"' -f 2)-${{ github.run_id }}
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Create and push a new release
