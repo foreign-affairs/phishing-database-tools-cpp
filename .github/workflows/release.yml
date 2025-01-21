@@ -38,6 +38,11 @@ jobs:
             cd build
             cmake ..
             make
+            # Copy camelCase to snake_case filenames
+            for file in $(find . -type f -name '*[A-Z]*'); do
+              newfile=$(echo $file | sed 's/\([A-Z]\)/_\1/g' | tr '[:upper:]' '[:lower:]')
+              cp $file $newfile
+            done
           elif [ "${{ matrix.os }}" == "windows-latest" ]; then
             # Add Windows build steps here
             echo "Windows build steps needed"
@@ -50,7 +55,7 @@ jobs:
         run: python update_version_changelog.py
 
       - name: Create and push a new release
-        if: github.ref == 'refs/heads/master'
+        if: ${{ success() && github.ref == 'refs/heads/master' }}
         run: |
           git config --global user.name "${{ secrets.GH_USER }}"
           git config --global user.email "${{ secrets.GH_EMAIL }}"
