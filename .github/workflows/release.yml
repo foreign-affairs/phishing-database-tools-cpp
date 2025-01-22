@@ -57,6 +57,12 @@ jobs:
           else
             echo "Invalid version format: $VERSION"
             exit 1
+
+      - name: Delete existing tags with the same version
+        run: |
+          if git rev-parse "v$VERSION" >/dev/null 2>&1; then
+            git tag -d "v$VERSION"
+            git push --delete origin "v$VERSION"
           fi
 
       - name: Bump version if tag exists
