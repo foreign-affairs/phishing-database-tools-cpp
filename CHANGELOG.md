@@ -1,3 +1,6 @@
+## Release 0.1.2
+- No comments, minor update
+
 ## Release 0.1.1
 - No comments, minor update
 
