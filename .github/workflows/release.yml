@@ -61,11 +61,11 @@ jobs:
 
       - name: Bump version if tag exists
         run: |
-          if git rev-parse "v$VERSION" >/dev/null 2>&1; then
+          while git rev-parse "v$VERSION" >/dev/null 2>&1; do
             VERSION=$(python -c 'from update_version_changelog import bump_version; print(bump_version())')
             echo "Bumped version: $VERSION"
             echo "VERSION=$VERSION" >> $GITHUB_ENV
-          fi
+          done
 
       - name: Create and push a new release
         if: ${{ success() && github.ref == 'refs/heads/master' }}
