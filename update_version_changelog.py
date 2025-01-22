@@ -24,7 +24,6 @@ def update_version(current_version):
         file.write(new_content)
     return new_version
 
-
 # Increment the version number
 def increment_version(version):
     major, minor, patch = map(int, version.split('.'))
