@@ -21,7 +21,7 @@ Questo strumento verifica i file di TXT del database di phishing. Le istruzioni 
 ## Usage
 
 ```shell
-PhishingDatabaseTools [options] domain test_value
+ptcheck [options] domain test_value
 ```
 
 ## Options
